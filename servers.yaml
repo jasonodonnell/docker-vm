@@ -1,0 +1,7 @@
+---
+- name: docker 
+  box: centos/7
+  hostname: "orc-docker.dev"
+  ip: 172.17.8.200
+  job: docker
+  ram: 4096

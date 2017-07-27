@@ -12,7 +12,7 @@ This is the virtualization blueprint to deploy:
 ## Deploy
 
 ```bash
-$ git clone git@github.com:jasonodonnenll/docker-vm
+$ git clone git@github.com:jasonodonnenll/docker-vm.git
 $ cd ./docker-vm
 $ vagrant up
 ```

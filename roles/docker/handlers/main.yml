@@ -1,0 +1,12 @@
+---
+- name: reload systemd configuration
+  command: systemctl daemon-reload
+
+- name: reload docker
+  command: systemctl reload docker
+
+- name: start docker
+  command: systemctl start docker
+
+- name: enable docker
+  command: systemctl enable docker

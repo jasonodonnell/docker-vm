@@ -1,0 +1,24 @@
+---
+- name: Update All Yum Packages
+  yum: name=* state=latest
+
+- name: Add Docker CE Repo
+  get_url:
+    url: "{{ docker_ce_repo }}"
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: 0644
+  become: true
+
+- name: Install Docker CE Dependencies
+  yum: name={{ item }} state=present update_cache=yes
+  with_items:
+  - go
+  - git
+  - device-mapper-persistent-data
+  - lvm2
+
+- name: Install Docker CE
+  yum: name=docker-ce state=present
+  notify:
+  - enable docker
+  - start docker

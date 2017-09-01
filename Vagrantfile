@@ -18,31 +18,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
             srv.vm.box = servers["box"]
             srv.vm.network "private_network", ip: servers["ip"]
             srv.vm.hostname = servers["hostname"]
-            srv.vm.box = "centos/7"
             srv.vm.provider :virtualbox do |vb|
                 vb.name = servers["name"]
                 vb.memory = servers["ram"]
             end
 
-            srv.vm.provision "shell", inline: <<-SHELL
-                echo "Building #{servers['name']}.."
-                echo "Updating yum.."
-                sudo yum -y update >/dev/null 2>&1
-                echo "Installing go vim git wget unzip.."
-                sudo yum -y install go vim git wget unzip >/dev/null 2>&1
-            SHELL
-
-            Dir["services/*"].each do |fname|
-                srv.vm.provision :file do |file|
-                    file.source = fname
-                    file.destination = "/tmp/" + File.basename(fname)
-                end
+            srv.vm.provision "ansible" do |ansible|
+                ansible.playbook = "playbook.yml"
+                ansible.tags="all"
+                ansible.extra_vars = {
+                    docker_compose_install: false 
+                }
             end
-            
-            srv.vm.provision "shell", inline: <<-SHELL
-                echo "Running bootstrap.."
-                sudo "/tmp/#{servers['job']}/scripts/bootstrap.sh"
-            SHELL
         end
     end
 end

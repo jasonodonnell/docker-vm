@@ -1,0 +1,35 @@
+---
+- name: Specific OS Variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags:
+  - always
+
+- name: Add Docker Group 
+  group:
+    name: docker
+    state: present
+  tags:
+  - always
+
+- name: Add Vagrant User To Docker Group
+  user:
+    name: vagrant 
+    comment: "Allow Vagrant User To Use Docker"
+    group: docker
+  tags:
+  - always
+
+- name: Install Docker CE On {{ ansible_os_family }}
+  include: docker-ce-install-rh.yml
+  when: ansible_os_family == "RedHat"
+  tags:
+  - install 
+
+- name: Install Docker Compose
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: /usr/local/bin/docker-compose
+    mode: 755
+  when: docker_compose_install
+  tags:
+  - install 

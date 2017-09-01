@@ -59,4 +59,7 @@ tags
 ### Vagrant ###
 .vagrant/
 
+### Ansible ###
+playbook.retry
+
 # End of https://www.gitignore.io/api/osx,vim,linux,vagrant

@@ -8,6 +8,7 @@ This is the virtualization blueprint to deploy:
 ## Requirements
 * Vagrant (tested on 1.8.6)
 * Virtual Box (tested on 5.1.6)
+* Ansible (tested on 2.3.2.0)
 
 ## Deploy
 

@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                 ansible.playbook = "playbook.yml"
                 ansible.tags="all"
                 ansible.extra_vars = {
-                    docker_compose_install: false 
+                    docker_compose_install: true 
                 }
             end
         end
